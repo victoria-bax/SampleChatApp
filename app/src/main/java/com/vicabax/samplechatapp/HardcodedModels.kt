@@ -27,7 +27,7 @@ object HardcodedModels {
             text = "I'm good! And you?",
             from = ALICE,
             to = BOB,
-            time = LocalDateTime.parse("2024-02-15T08:33"),
+            time = LocalDateTime.parse("2024-02-15T08:33:10"),
         ),
         Message(
             text = "Hi, I'm Steve!",
@@ -39,7 +39,7 @@ object HardcodedModels {
             text = "I'm writing a small app. Care to have a look?",
             from = ALICE,
             to = BOB,
-            time = LocalDateTime.parse("2024-02-15T08:34"),
+            time = LocalDateTime.parse("2024-02-15T08:33:12"),
         ),
         Message(
             text = "Are you in there?",

@@ -17,6 +17,7 @@ import com.vicabax.samplechatapp.ui.model.MessageUiModel.DateTimeUiModel
 import com.vicabax.samplechatapp.ui.model.MessageUiModel.IncomingMessageUiModel
 import com.vicabax.samplechatapp.ui.model.MessageUiModel.OutgoingMessageUiModel
 import com.vicabax.samplechatapp.ui.model.OutgoingMessageStatus
+import com.vicabax.samplechatapp.ui.model.SeparatorType
 
 class MessagesAdapter :
     ListAdapter<MessageUiModel, MessageViewHolder<MessageUiModel>>(diffCallback) {
@@ -70,12 +71,23 @@ abstract class MessageViewHolder<T : MessageUiModel>(itemView: View) :
     abstract fun bind(message: T)
 
     protected fun getContext(): Context = itemView.context
+
+    protected fun View.setSeparator(separatorType: SeparatorType) {
+        val paddingTop = context.resources.getDimensionPixelSize(
+            when (separatorType) {
+                SeparatorType.SMALL -> R.dimen.padding_small
+                SeparatorType.BIG -> R.dimen.padding_medium
+            }
+        )
+        setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom)
+    }
 }
 
 private class IncomingViewHolder(private val binding: MessageItemIncomingBinding) :
     MessageViewHolder<IncomingMessageUiModel>(binding.root) {
     override fun bind(message: IncomingMessageUiModel) {
         binding.message.text = message.text
+        binding.root.setSeparator(message.separator)
     }
 }
 
@@ -83,6 +95,7 @@ private class OutgoingViewHolder(private val binding: MessageItemOutgoingBinding
     MessageViewHolder<OutgoingMessageUiModel>(binding.root) {
     override fun bind(message: OutgoingMessageUiModel) {
         binding.message.text = message.text
+        binding.root.setSeparator(message.separator)
         binding.messageSendStatus.apply {
             visibility = when (message.status) {
                 OutgoingMessageStatus.SENDING -> GONE

@@ -8,7 +8,7 @@ import com.vicabax.samplechatapp.data.messages.MessageRepository
 import com.vicabax.samplechatapp.data.model.Message
 import com.vicabax.samplechatapp.data.model.User
 import com.vicabax.samplechatapp.data.repo.user.UserRepository
-import com.vicabax.samplechatapp.ui.mapper.MessageMapper
+import com.vicabax.samplechatapp.ui.mapper.MessageUiModelMapper
 import com.vicabax.samplechatapp.ui.model.MessageUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -22,7 +22,7 @@ import javax.inject.Inject
 class MessagesListViewModel @Inject constructor(
     private val usersRepository: UserRepository,
     private val messageRepository: MessageRepository,
-    private val messageMapper: MessageMapper,
+    private val messageMapper: MessageUiModelMapper,
 ) : ViewModel() {
 
     private val _messages: MutableStateFlow<List<MessageUiModel>> =
@@ -53,7 +53,6 @@ class MessagesListViewModel @Inject constructor(
                                         )
                                     }
                             }
-                        // todo add separators
                     }
 
                 }
