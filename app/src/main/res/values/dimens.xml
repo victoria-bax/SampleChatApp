@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="message_item_bubble_corner_radius">8dp</dimen>
+    <dimen name="message_item_bubble_max_width">300dp</dimen>
+    <dimen name="padding_medium">8dp</dimen>
+    <dimen name="padding_large">16dp</dimen>
+
+    <dimen name="switch_user_padding">@dimen/padding_large</dimen>
+    <dimen name="message_item_bubble_padding">@dimen/padding_medium</dimen>
+    <dimen name="message_user_icon_size">48dp</dimen>
+
+
+</resources>

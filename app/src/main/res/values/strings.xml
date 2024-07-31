@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">SampleChatApp</string>
+    <string name="active_user_switch">Hi, I\'m %1$s!</string>
+    <string name="day_time_format"><b>%1$s</b> %2$s</string>
+
+    <string name="test_text_short">Lorem ipsum</string>
+    <string name="test_text_long">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dignissim tortor a posuere interdum. Duis interdum tortor eget massa mattis, id pharetra ex tempor. Pellentesque commodo nisl auctor nisl gravida, eu laoreet ex vehicula. Interdum et malesuada fames ac ante ipsum primis in faucibus. Mauris sed felis porttitor, suscipit mi eu, dictum tortor. Donec id est vitae nulla imperdiet pretium. Duis pulvinar tellus vitae nibh condimentum, non malesuada tellus tristique. In lobortis et ante sed volutpat. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nam tincidunt molestie lacus in lacinia. Vestibulum tincidunt magna quis nisl finibus, sit amet faucibus orci suscipit. Quisque facilisis leo quis ligula malesuada, ut consequat urna dictum. Cras scelerisque rutrum velit, sit amet ornare metus. Vivamus neque elit, elementum id lacinia pharetra, imperdiet quis eros.</string>
+
+<!--    Content descriptions-->
+    <string name="message_outgoing_status_description">Message send status</string>
+    <string name="message_list_user_avatar_content_description">User avatar</string>
+
 </resources>

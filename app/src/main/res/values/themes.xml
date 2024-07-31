@@ -1,9 +1,41 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+<resources>
     <style name="Base.Theme.SampleChatApp" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+         <item name="colorPrimaryDark">@color/white</item>
+        <item name="android:windowBackground">@color/white</item>
     </style>
 
     <style name="Theme.SampleChatApp" parent="Base.Theme.SampleChatApp" />
+
+    <style name="SwitchStyle" parent="Theme.AppCompat.Light">
+        <item name="colorControlActivated">#ea3879</item>
+
+        <item name="colorSwitchThumbNormal">#f1f1f1
+        </item>
+
+        <item name="android:colorForeground">#42221f1f
+        </item>
+    </style>
+
+    <style name="Message"/>
+
+    <style name="Message.DateTimeText">
+        <item name="android:textColor">@color/text_light</item>
+    </style>
+
+
+    <style name="Message.Bubble">
+        <item name="android:minLines">1</item>
+        <item name="android:maxWidth">@dimen/message_item_bubble_max_width</item>
+        <item name="android:padding">@dimen/message_item_bubble_padding</item>
+    </style>
+
+    <style name="Message.Bubble.Incoming">
+        <item name="android:background">@drawable/message_item_incoming_bubble</item>
+        <item name="android:textColor">@color/text_primary</item>
+    </style>
+
+    <style name="Message.Bubble.Outgoing">
+        <item name="android:background">@drawable/message_item_outgoing_bubble</item>
+        <item name="android:textColor">@color/text_secondary</item>
+    </style>
 </resources>
