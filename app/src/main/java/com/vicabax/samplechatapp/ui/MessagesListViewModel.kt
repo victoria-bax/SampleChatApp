@@ -10,13 +10,10 @@ import com.vicabax.samplechatapp.data.model.User
 import com.vicabax.samplechatapp.data.repo.user.UserRepository
 import com.vicabax.samplechatapp.ui.mapper.MessageMapper
 import com.vicabax.samplechatapp.ui.model.MessageUiModel
-import com.vicabax.samplechatapp.ui.model.OutgoingMessageStatus
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -46,12 +43,16 @@ class MessagesListViewModel @Inject constructor(
                     }
                     friend?.let { user ->
                         messageRepository.getMessagesForChatWith(user)
-                            .collect{ list ->
-                                _messages.value = list.map { message: Message ->
-                                    messageMapper.map(message, loggedInUser)
-                                }
+                            .collect { list ->
+                                _messages.value =
+                                    list.flatMapIndexed { index: Int, message: Message ->
+                                        messageMapper.map(
+                                            message,
+                                            list.getOrNull(index - 1),
+                                            loggedInUser
+                                        )
+                                    }
                             }
-                        // todo insert timestamps
                         // todo add separators
                     }
 

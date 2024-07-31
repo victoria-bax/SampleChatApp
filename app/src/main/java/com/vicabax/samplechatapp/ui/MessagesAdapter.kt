@@ -1,5 +1,6 @@
 package com.vicabax.samplechatapp.ui
 
+import android.content.Context
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -10,13 +11,20 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.vicabax.samplechatapp.R
 import com.vicabax.samplechatapp.databinding.MessageItemIncomingBinding
 import com.vicabax.samplechatapp.databinding.MessageItemOutgoingBinding
+import com.vicabax.samplechatapp.databinding.MessageItemTimeSeparatorBinding
 import com.vicabax.samplechatapp.ui.model.MessageUiModel
+import com.vicabax.samplechatapp.ui.model.MessageUiModel.DateTimeUiModel
 import com.vicabax.samplechatapp.ui.model.MessageUiModel.IncomingMessageUiModel
 import com.vicabax.samplechatapp.ui.model.MessageUiModel.OutgoingMessageUiModel
 import com.vicabax.samplechatapp.ui.model.OutgoingMessageStatus
 
-class MessagesAdapter : ListAdapter<MessageUiModel, MessageViewHolder<MessageUiModel>>(diffCallback) {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MessageViewHolder<MessageUiModel> =
+class MessagesAdapter :
+    ListAdapter<MessageUiModel, MessageViewHolder<MessageUiModel>>(diffCallback) {
+    @Suppress("UNCHECKED_CAST")
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): MessageViewHolder<MessageUiModel> =
         when (viewType) {
             MessageUiModel.INCOMING_TYPE -> IncomingViewHolder(
                 MessageItemIncomingBinding.inflate(parent.inflater(), parent, false)
@@ -25,7 +33,11 @@ class MessagesAdapter : ListAdapter<MessageUiModel, MessageViewHolder<MessageUiM
             MessageUiModel.OUTGOING_TYPE -> OutgoingViewHolder(
                 MessageItemOutgoingBinding.inflate(parent.inflater(), parent, false)
             )
-            //todo: timestamp type
+
+            MessageUiModel.TIMESTAMP_TYPE -> TimestampViewHolder(
+                MessageItemTimeSeparatorBinding.inflate(parent.inflater(), parent, false)
+            )
+
             else -> error("Unknown viewType: $viewType")
         } as MessageViewHolder<MessageUiModel>
 
@@ -56,6 +68,8 @@ class MessagesAdapter : ListAdapter<MessageUiModel, MessageViewHolder<MessageUiM
 abstract class MessageViewHolder<T : MessageUiModel>(itemView: View) :
     ViewHolder(itemView) {
     abstract fun bind(message: T)
+
+    protected fun getContext(): Context = itemView.context
 }
 
 private class IncomingViewHolder(private val binding: MessageItemIncomingBinding) :
@@ -84,5 +98,13 @@ private class OutgoingViewHolder(private val binding: MessageItemOutgoingBinding
             }
         }
 
+    }
+}
+
+private class TimestampViewHolder(private val binding: MessageItemTimeSeparatorBinding) :
+    MessageViewHolder<DateTimeUiModel>(binding.root) {
+    override fun bind(message: DateTimeUiModel) {
+        binding.dayText.text =
+            getContext().getString(R.string.day_time_format, message.day, message.time)
     }
 }
