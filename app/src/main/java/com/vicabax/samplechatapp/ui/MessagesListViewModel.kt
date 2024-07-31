@@ -8,6 +8,7 @@ import com.vicabax.samplechatapp.data.messages.MessageRepository
 import com.vicabax.samplechatapp.data.model.Message
 import com.vicabax.samplechatapp.data.model.User
 import com.vicabax.samplechatapp.data.repo.user.UserRepository
+import com.vicabax.samplechatapp.ui.mapper.MessageMapper
 import com.vicabax.samplechatapp.ui.model.MessageUiModel
 import com.vicabax.samplechatapp.ui.model.OutgoingMessageStatus
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,7 +24,8 @@ import javax.inject.Inject
 @HiltViewModel
 class MessagesListViewModel @Inject constructor(
     private val usersRepository: UserRepository,
-    private val messageRepository: MessageRepository
+    private val messageRepository: MessageRepository,
+    private val messageMapper: MessageMapper,
 ) : ViewModel() {
 
     private val _messages: MutableStateFlow<List<MessageUiModel>> =
@@ -46,16 +48,7 @@ class MessagesListViewModel @Inject constructor(
                         messageRepository.getMessagesForChatWith(user)
                             .collect{ list ->
                                 _messages.value = list.map { message: Message ->
-                                    // todo make mapper
-                                    if (message.from == loggedInUser) {
-                                        //todo work with statuses
-                                        MessageUiModel.OutgoingMessageUiModel(
-                                            message.text,
-                                            OutgoingMessageStatus.SENT
-                                        )
-                                    } else {
-                                        MessageUiModel.IncomingMessageUiModel(message.text)
-                                    }
+                                    messageMapper.map(message, loggedInUser)
                                 }
                             }
                         // todo insert timestamps
