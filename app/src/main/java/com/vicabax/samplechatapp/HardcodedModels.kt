@@ -48,7 +48,7 @@ object HardcodedModels {
             time = LocalDateTime.parse("2024-02-15T11:43"),
         ),
         Message(
-            text = "Sorry, I was busy, had an important interview. Sure, I'd be happy to look at your app! Can you share a link to me?",
+            text = "Sorry, I was busy, had an important interview. Sure, I'd be happy to look at your app! Can you share a link with me?",
             from = BOB,
             to = ALICE,
             time = LocalDateTime.parse("2024-02-15T11:43"),
