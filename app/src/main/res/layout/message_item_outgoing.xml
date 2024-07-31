@@ -7,6 +7,7 @@
     android:padding="@dimen/padding_medium">
 
     <TextView
+        android:id="@+id/message"
         style="@style/Message.Bubble.Outgoing"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

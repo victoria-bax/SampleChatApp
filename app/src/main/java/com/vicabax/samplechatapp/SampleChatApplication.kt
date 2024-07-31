@@ -1,0 +1,18 @@
+package com.vicabax.samplechatapp
+
+import android.app.Application
+import dagger.hilt.android.HiltAndroidApp
+import timber.log.Timber
+
+@HiltAndroidApp
+class SampleChatApplication : Application() {
+
+    override fun onCreate() {
+        super.onCreate()
+        if (BuildConfig.DEBUG) {
+            Timber.plant(Timber.DebugTree())
+        } else {
+            //do some Crashlytics or other crash reporting logs
+        }
+    }
+}

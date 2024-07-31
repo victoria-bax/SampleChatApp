@@ -6,6 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:padding="@dimen/padding_medium">
     <TextView
+        android:id="@+id/message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/Message.Bubble.Incoming"
