@@ -5,6 +5,7 @@
         <item name="android:windowBackground">@color/white</item>
         <item name="colorPrimary">@color/accent_pink</item>
         <item name="colorContainer">@color/white</item>
+        <item name="fontFamily">sans-serif-light</item>
     </style>
 
     <style name="Theme.SampleChatApp" parent="Base.Theme.SampleChatApp" />
@@ -17,6 +18,12 @@
 
         <item name="android:colorForeground">#42221f1f
         </item>
+    </style>
+
+    <style name="TextToolbar">
+        <item name="android:textColor">@color/text_light</item>
+        <item name="fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">24sp</item>
     </style>
 
     <style name="Message" />

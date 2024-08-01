@@ -1,8 +1,10 @@
 package com.vicabax.samplechatapp.ui
 
 import android.content.Context
+import android.text.Html
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.text.HtmlCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.GONE
@@ -118,6 +120,9 @@ private class TimestampViewHolder(private val binding: MessageItemTimeSeparatorB
     MessageViewHolder<DateTimeUiModel>(binding.root) {
     override fun bind(message: DateTimeUiModel) {
         binding.dayText.text =
-            getContext().getString(R.string.day_time_format, message.day, message.time)
+            Html.fromHtml(
+                getContext().getString(R.string.day_time_format, message.day, message.time),
+                HtmlCompat.FROM_HTML_MODE_COMPACT
+            )
     }
 }

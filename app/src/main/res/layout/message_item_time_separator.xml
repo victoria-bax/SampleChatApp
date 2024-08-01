@@ -13,6 +13,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        style="@style/Message.DateTimeText"
         tools:text="Thursday 11:59"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
