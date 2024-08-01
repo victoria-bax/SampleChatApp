@@ -6,9 +6,9 @@ import java.time.LocalDateTime
 
 @Suppress("MaxLineLength")
 object HardcodedModels {
-    val ALICE = User("1", "Alice")
-    val BOB = User("2", "Bob")
-    val STEVE = User("AndYourFriendSteve!", "Steve")
+    val ALICE = User("1", "Alice", R.drawable.alice_avatar)
+    val BOB = User("2", "Bob", R.drawable.bob_avatar)
+    val STEVE = User("AndYourFriendSteve!", "Steve", null)
 
     val messages = listOf(
         Message(
