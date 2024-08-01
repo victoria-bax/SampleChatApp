@@ -12,12 +12,16 @@ import com.vicabax.samplechatapp.ui.mapper.MessageUiModelMapper
 import com.vicabax.samplechatapp.ui.model.MessageUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.flatMapMerge
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import timber.log.Timber
+import java.time.LocalDateTime
 import javax.inject.Inject
 
+@OptIn(FlowPreview::class)
 @HiltViewModel
 class MessagesListViewModel @Inject constructor(
     private val usersRepository: UserRepository,
@@ -32,33 +36,33 @@ class MessagesListViewModel @Inject constructor(
     init {
         viewModelScope.launch(Dispatchers.IO) {
             usersRepository.getLoggedInUser()
-                .collect { loggedInUser ->
-                    val friend: User? = when (loggedInUser) {
+                .map { loggedInUser ->
+                    val friend: User = when (loggedInUser) {
                         ALICE -> BOB
                         BOB -> ALICE
                         else -> {
-                            Timber.e("Unknown user: $loggedInUser")
-                            null
+                            error("Unknown user: $loggedInUser")
                         }
                     }
-                    friend?.let { user ->
-                        messageRepository.getMessagesForChatWith(user)
-                            .collect { list ->
-                                _state.value =
-                                    ChatScreenState.Loaded(
-                                        messages = list.flatMapIndexed { index: Int, message: Message ->
-                                            messageMapper.map(
-                                                message,
-                                                list.getOrNull(index - 1),
-                                                loggedInUser
-                                            )
-                                        },
-                                        loggedUser = loggedInUser,
-                                        friend = friend,
-                                    )
-                            }
-                    }
-
+                    loggedInUser to friend
+                }.flatMapMerge { (loggedInUser, friend) ->
+                    messageRepository.getMessagesForChatWith(friend)
+                        .map { messages ->
+                            Triple(loggedInUser, friend, messages)
+                        }
+                }.collect { (loggedInUser, friend, messages) ->
+                    _state.value =
+                        ChatScreenState.Loaded(
+                            messages = messages.flatMapIndexed { index: Int, message: Message ->
+                                messageMapper.map(
+                                    message,
+                                    messages.getOrNull(index - 1),
+                                    loggedInUser
+                                )
+                            },
+                            loggedUser = loggedInUser,
+                            friend = friend,
+                        )
                 }
         }
     }
@@ -66,6 +70,22 @@ class MessagesListViewModel @Inject constructor(
     fun switchUser() {
         viewModelScope.launch(Dispatchers.IO) {
             usersRepository.switchLoggedInUser()
+        }
+    }
+
+    fun sendMessage(text: String) {
+        val state = state.value as? ChatScreenState.Loaded
+        if (state != null) {
+            messageRepository.addMessage(
+                Message(
+                    text = text,
+                    from = state.loggedUser,
+                    to = state.friend,
+                    time = LocalDateTime.now()
+                )
+            )
+        } else {
+            //todo show some error, and make button disabled on other states
         }
     }
 

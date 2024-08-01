@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import androidx.activity.viewModels
+import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.vicabax.samplechatapp.R
 import com.vicabax.samplechatapp.databinding.ActivityMainBinding
@@ -27,8 +29,16 @@ class MainActivity : BindingActivity<ActivityMainBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.messagesList.adapter = adapter
+        setScrollOnInsertedMessages()
         binding.userSelectionSwitch.setOnCheckedChangeListener { _, _ ->
             viewModel.switchUser()
+        }
+        binding.messageInput.addTextChangedListener { text ->
+            binding.buttonSend.isEnabled = !text.isNullOrEmpty()
+        }
+        binding.buttonSend.setOnClickListener {
+            viewModel.sendMessage(binding.messageInput.text.toString())
+            binding.messageInput.text.clear()
         }
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.CREATED) {
@@ -44,6 +54,15 @@ class MainActivity : BindingActivity<ActivityMainBinding>() {
                 }
             }
         }
+    }
+
+    private fun setScrollOnInsertedMessages() {
+        adapter.registerAdapterDataObserver(object :
+            RecyclerView.AdapterDataObserver() {
+            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                binding.messagesList.scrollToPosition(positionStart + itemCount - 1)
+            }
+        })
     }
 
     private fun setLoaded(state: ChatScreenState.Loaded) {
@@ -66,6 +85,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>() {
         }
         state.messages.let { messages ->
             adapter.submitList(messages)
+//            binding.messagesList.scrollToPosition(messages.size - 1);
         }
 
     }

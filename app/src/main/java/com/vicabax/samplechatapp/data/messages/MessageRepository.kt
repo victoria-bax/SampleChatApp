@@ -6,4 +6,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface MessageRepository {
     suspend fun getMessagesForChatWith(user: User): Flow<List<Message>>
+    fun addMessage(message: Message)
+
 }
