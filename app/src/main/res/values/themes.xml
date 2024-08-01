@@ -1,7 +1,10 @@
 <resources>
+
     <style name="Base.Theme.SampleChatApp" parent="Theme.Material3.DayNight.NoActionBar">
-         <item name="colorPrimaryDark">@color/white</item>
+        <item name="colorPrimaryDark">@color/white</item>
         <item name="android:windowBackground">@color/white</item>
+        <item name="colorPrimary">@color/accent_pink</item>
+        <item name="colorContainer">@color/white</item>
     </style>
 
     <style name="Theme.SampleChatApp" parent="Base.Theme.SampleChatApp" />
@@ -16,7 +19,7 @@
         </item>
     </style>
 
-    <style name="Message"/>
+    <style name="Message" />
 
     <style name="Message.DateTimeText">
         <item name="android:textColor">@color/text_light</item>
@@ -37,5 +40,12 @@
     <style name="Message.Bubble.Outgoing">
         <item name="android:background">@drawable/message_item_outgoing_bubble</item>
         <item name="android:textColor">@color/text_secondary</item>
+    </style>
+
+    <style name="Input">
+        <item name="android:background">@drawable/bg_message_input_text</item>
+        <item name="android:paddingHorizontal">@dimen/padding_large</item>
+        <item name="android:paddingVertical">@dimen/padding_medium</item>
+        <item name="android:layout_margin">@dimen/padding_medium</item>
     </style>
 </resources>
