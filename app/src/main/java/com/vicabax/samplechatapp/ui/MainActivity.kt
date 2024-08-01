@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import androidx.activity.viewModels
+import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -66,6 +67,8 @@ class MainActivity : BindingActivity<ActivityMainBinding>() {
     }
 
     private fun setLoaded(state: ChatScreenState.Loaded) {
+        binding.progress.isVisible = false
+        binding.userSelectionSwitch.isVisible = true
         state.friend.let { user ->
             binding.userName.text = user.name
             binding.userIcon.visibility = if (user.image == null) {
@@ -91,10 +94,14 @@ class MainActivity : BindingActivity<ActivityMainBinding>() {
     }
 
     private fun setLoading() {
-        // todo
+        binding.progress.isVisible = true
+        binding.userSelectionSwitch.isVisible = false
     }
 
     private fun setError(error: String) {
+        binding.progress.isVisible = false
+        binding.userSelectionSwitch.isVisible = false
+
         // todo
     }
 }
