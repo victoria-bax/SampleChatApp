@@ -2,6 +2,8 @@
 
 This app was implemented as an excercise.
 
+[Screen_recording_20240801_193228.webm](https://github.com/user-attachments/assets/c50607d6-c4f6-4b9c-bee3-3b40f4dcda22)
+
 ## Developing steps
 ### Creating minimal funcionality
 I started with making basic functionality: messages list without new message functionality, coming from a hardcoded repository. I used Hilt for dependency injection, and created repositories interfaces and hardcoded implementations, in order to easily replace them later.
