@@ -3,6 +3,8 @@ package com.vicabax.samplechatapp.ui
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
@@ -88,7 +90,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>() {
         }
         state.messages.let { messages ->
             adapter.submitList(messages)
-//            binding.messagesList.scrollToPosition(messages.size - 1);
+            binding.emptyPlaceholder.isVisible = messages.isEmpty()
         }
 
     }

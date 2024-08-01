@@ -9,5 +9,6 @@
 <!--    Content descriptions-->
     <string name="message_outgoing_status_description">Message send status</string>
     <string name="message_list_user_avatar_content_description">User avatar</string>
+    <string name="no_messages_placeholder">Nothing here... yet. Start messaging!</string>
 
 </resources>
