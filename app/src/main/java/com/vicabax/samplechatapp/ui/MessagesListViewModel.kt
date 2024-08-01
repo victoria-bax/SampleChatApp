@@ -4,15 +4,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.vicabax.samplechatapp.HardcodedModels.ALICE
 import com.vicabax.samplechatapp.HardcodedModels.BOB
-import com.vicabax.samplechatapp.data.messages.MessageRepository
 import com.vicabax.samplechatapp.data.model.Message
 import com.vicabax.samplechatapp.data.model.User
+import com.vicabax.samplechatapp.data.repo.messages.MessageRepository
 import com.vicabax.samplechatapp.data.repo.user.UserRepository
 import com.vicabax.samplechatapp.ui.mapper.MessageUiModelMapper
 import com.vicabax.samplechatapp.ui.model.MessageUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.flatMapMerge
@@ -22,7 +22,7 @@ import java.time.LocalDateTime
 import java.util.UUID
 import javax.inject.Inject
 
-@OptIn(FlowPreview::class)
+@OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
 class MessagesListViewModel @Inject constructor(
     private val usersRepository: UserRepository,

@@ -1,4 +1,4 @@
-package com.vicabax.samplechatapp.data.messages
+package com.vicabax.samplechatapp.data.repo.messages
 
 import com.vicabax.samplechatapp.data.model.Message
 import com.vicabax.samplechatapp.data.model.User

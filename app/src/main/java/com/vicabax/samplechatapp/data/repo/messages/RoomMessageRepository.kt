@@ -1,6 +1,6 @@
-package com.vicabax.samplechatapp.data.db
+package com.vicabax.samplechatapp.data.repo.messages
 
-import com.vicabax.samplechatapp.data.messages.MessageRepository
+import com.vicabax.samplechatapp.data.db.MessageDb
 import com.vicabax.samplechatapp.data.model.Message
 import com.vicabax.samplechatapp.data.model.User
 import com.vicabax.samplechatapp.data.repo.user.UserRepository
