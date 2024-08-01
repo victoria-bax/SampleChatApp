@@ -33,7 +33,7 @@ class HardcodedMessageRepository @Inject constructor(
             else -> false
         }
 
-    override fun addMessage(message: Message) {
+    override suspend fun addMessage(message: Message) {
         messages.value = messages.value + message
     }
 }

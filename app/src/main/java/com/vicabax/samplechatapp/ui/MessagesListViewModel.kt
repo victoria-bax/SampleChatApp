@@ -19,6 +19,7 @@ import kotlinx.coroutines.flow.flatMapMerge
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
+import java.util.UUID
 import javax.inject.Inject
 
 @OptIn(FlowPreview::class)
@@ -76,14 +77,17 @@ class MessagesListViewModel @Inject constructor(
     fun sendMessage(text: String) {
         val state = state.value as? ChatScreenState.Loaded
         if (state != null) {
-            messageRepository.addMessage(
-                Message(
-                    text = text,
-                    from = state.loggedUser,
-                    to = state.friend,
-                    time = LocalDateTime.now()
+            viewModelScope.launch(Dispatchers.IO) {
+                messageRepository.addMessage(
+                    Message(
+                        id = UUID.randomUUID().toString(),
+                        text = text,
+                        from = state.loggedUser,
+                        to = state.friend,
+                        time = LocalDateTime.now()
+                    )
                 )
-            )
+            }
         } else {
             //todo show some error, and make button disabled on other states
         }

@@ -1,6 +1,7 @@
 package com.vicabax.samplechatapp.di
 
-import com.vicabax.samplechatapp.data.messages.HardcodedMessageRepository
+import com.vicabax.samplechatapp.data.db.MessageDb
+import com.vicabax.samplechatapp.data.db.RoomMessageRepository
 import com.vicabax.samplechatapp.data.messages.MessageRepository
 import com.vicabax.samplechatapp.data.repo.user.HardcodedUserRepository
 import com.vicabax.samplechatapp.data.repo.user.UserRepository
@@ -21,6 +22,9 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideMessagesRepository(userRepository: UserRepository): MessageRepository =
-        HardcodedMessageRepository(userRepository)
+    fun provideMessagesRepository(
+        messageDb: MessageDb,
+        userRepository: UserRepository
+    ): MessageRepository =
+        RoomMessageRepository(messageDb, userRepository)
 }
