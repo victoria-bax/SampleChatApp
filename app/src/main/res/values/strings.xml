@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">SampleChatApp</string>
-    <string name="active_user_switch">Hi, I\'m %1$s!</string>
+    <string name="active_user_switch">%1$s is logged in</string>
     <string name="day_time_format"><b>%1$s</b> %2$s</string>
 
     <string name="test_text_short">Lorem ipsum</string>

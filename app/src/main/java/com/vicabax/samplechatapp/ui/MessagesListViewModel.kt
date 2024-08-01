@@ -25,9 +25,9 @@ class MessagesListViewModel @Inject constructor(
     private val messageMapper: MessageUiModelMapper,
 ) : ViewModel() {
 
-    private val _messages: MutableStateFlow<List<MessageUiModel>> =
-        MutableStateFlow(emptyList())
-    val messages = _messages.asStateFlow()
+    private val _state: MutableStateFlow<ChatScreenState> =
+        MutableStateFlow(ChatScreenState.Loading)
+    val state = _state.asStateFlow()
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
@@ -44,20 +44,42 @@ class MessagesListViewModel @Inject constructor(
                     friend?.let { user ->
                         messageRepository.getMessagesForChatWith(user)
                             .collect { list ->
-                                _messages.value =
-                                    list.flatMapIndexed { index: Int, message: Message ->
-                                        messageMapper.map(
-                                            message,
-                                            list.getOrNull(index - 1),
-                                            loggedInUser
-                                        )
-                                    }
+                                _state.value =
+                                    ChatScreenState.Loaded(
+                                        messages = list.flatMapIndexed { index: Int, message: Message ->
+                                            messageMapper.map(
+                                                message,
+                                                list.getOrNull(index - 1),
+                                                loggedInUser
+                                            )
+                                        },
+                                        loggedUser = loggedInUser,
+                                        friend = friend,
+                                    )
                             }
                     }
 
                 }
-
         }
+    }
+
+    fun switchUser() {
+        viewModelScope.launch(Dispatchers.IO) {
+            usersRepository.switchLoggedInUser()
+        }
+    }
+
+    sealed class ChatScreenState {
+        object Loading : ChatScreenState()
+
+        data class Loaded(
+            val messages: List<MessageUiModel>,
+            val loggedUser: User,
+            val friend: User
+        ) :
+            ChatScreenState()
+
+        data class Error(val message: String) : ChatScreenState()
     }
 
 }
