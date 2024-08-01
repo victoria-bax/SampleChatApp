@@ -3,8 +3,6 @@ package com.vicabax.samplechatapp.ui
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
@@ -13,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.android.material.snackbar.Snackbar
 import com.vicabax.samplechatapp.R
 import com.vicabax.samplechatapp.databinding.ActivityMainBinding
 import com.vicabax.samplechatapp.ui.MessagesListViewModel.ChatScreenState
@@ -103,7 +102,6 @@ class MainActivity : BindingActivity<ActivityMainBinding>() {
     private fun setError(error: String) {
         binding.progress.isVisible = false
         binding.userSelectionSwitch.isVisible = false
-
-        // todo
+        Snackbar.make(binding.root, error, Snackbar.LENGTH_LONG).show()
     }
 }
